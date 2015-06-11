@@ -1,5 +1,7 @@
 var models = require('../models/models.js');
 
+var temas = ["Otro", "Humanidades", "Ocio", "Ciencia", "Tecnología" ];
+
 
 exports.load = function (req, res, next, quizId) {
     models.Quiz.findById(quizId).then(
@@ -44,10 +46,10 @@ exports.answer = function(req,res){
 exports.new = function(req,res){
    //crea un objeto quiz
     var quiz = models.Quiz.build(
-       {pregunta: "Pregunta", respuesta: "Respuesta"}
+       {pregunta: "Pregunta", respuesta: "Respuesta", tema:""}
    );
 
-    res.render('quizes/new',{quiz: quiz, errors:[]});
+    res.render('quizes/new',{quiz: quiz, temas: temas, errors:[]});
 };
 
 //GET /quizes/create
@@ -58,9 +60,9 @@ exports.create = function(req,res){
     //Guarda en DB
     quiz.validate().then(function (err) {
         if(err){
-            res.render('quizes/new',{quiz: quiz, errors: err.errors});
+            res.render('quizes/new',{quiz: quiz, temas:temas, errors: err.errors});
         }else{
-            quiz.save({fields:["pregunta", "respuesta"]}).then(
+            quiz.save({fields:["pregunta", "respuesta", "tema"]}).then(
                 function(){
                     res.redirect('/quizes');
                 }
@@ -73,28 +75,27 @@ exports.create = function(req,res){
 //GET /quizes/:id/edit
 exports.edit = function(req,res){
     var quiz = req.quiz;
-    res.render('quizes/edit', {quiz:quiz, errors:[]});
+    res.render('quizes/edit', {quiz:quiz, temas: temas, errors:[]});
 }
 
 //PUT /quizes/:id
 exports.update = function(req,res){
     req.quiz.pregunta = req.body.quiz.pregunta;
     req.quiz.respuesta = req.body.quiz.respuesta;
+    req.quiz.tema = req.body.quiz.tema;
 
     req.quiz.validate().then(function (err) {
         if(err){
-            res.render('quizes/edit',{quiz: req.quiz, errors: err.errors});
+            res.render('quizes/edit',{quiz: req.quiz, temas:temas, errors: err.errors});
         }else{
-           req.quiz.save({fields:["pregunta", "respuesta"]}).then(
+           req.quiz.save({fields:["pregunta", "respuesta", "tema"]}).then(
                 function(){
                     res.redirect('/quizes');
                 }
             );
         }
     })
-
-
-}
+};
 
 //DELETE  /quizes/:id
 exports.destroy = function(req,res){
