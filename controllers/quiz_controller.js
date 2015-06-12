@@ -4,7 +4,11 @@ var temas = ["Otro", "Humanidades", "Ocio", "Ciencia", "Tecnología" ];
 
 
 exports.load = function (req, res, next, quizId) {
-    models.Quiz.findById(quizId).then(
+   // models.Quiz.findById(quizId).then(
+    models.Quiz.find({
+        where: {id: Number(quizId)},
+        include: [{model: models.Comment}]
+    }).then(
         function(quiz){
             if (quiz) {
                 req.quiz = quiz;
@@ -21,7 +25,9 @@ exports.index = function(req,res){
     var search = (req.query.search || '');
     var csearch = '%' + search.replace(' ','%') +'%';
 
-    models.Quiz.findAll({where: ["pregunta like ?", csearch]}).then(function(quizes){
+    models.Quiz.findAll(
+        {where: ["pregunta like ?", csearch],
+        order : 'pregunta COLLATE NOCASE ASC'}).then(function(quizes){
         res.render('quizes/index.ejs',{quizes: quizes, search: search, errors:[]});
     }).catch(function(error){ next(error);});
 };
