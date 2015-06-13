@@ -55,7 +55,7 @@ exports.Comment = Comment;
 //crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function(){
     //Ejecuta el manejador una vez creada la tabla
-    Quiz.count().then(function(count){
+    /*Quiz.count().then(function(count){
         if(count === 0){    //si esta vacía, la inicializamos
             Quiz.create({ pregunta:'Capital de Italia',
                           respuesta: 'Roma',
@@ -66,5 +66,6 @@ sequelize.sync().then(function(){
                           tema: 'Otro'
             }).then(function(){console.log('Base de Datos Inicializada')});
         };
-    });
+    });*/
+    console.log('Base de Datos Inicializada');
 });
