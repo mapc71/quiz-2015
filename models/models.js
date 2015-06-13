@@ -4,9 +4,13 @@
  */
 var path = require('path');
 
+var DATABASE_URL = 'sqlite://:@:/';
+var DATABASE_STORAGE='quiz.sqlite';
+var url = DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
+var storage = DATABASE_STORAGE;
 //Postgres DATABASE_URL = postgres://user:passwd@host:port/database
 //SQLITE   DATABASE_URL = sqlite://:@:/
-var url = process.env.DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
+//var url = process.env.DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
 var dialect = (url[1]||null);
 var protocol = (url[1]||null);
 var user = (url[2]||null);
@@ -14,7 +18,7 @@ var pwd = (url[3]||null);
 var host = (url[4]||null);
 var port = (url[5]||null);
 var DB_name = (url[6]||null);
-var storage = process.env.DATABASE_STORAGE;
+//var storage = process.env.DATABASE_STORAGE;
 
 
 //Cargar modelo ORM
