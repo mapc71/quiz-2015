@@ -27,7 +27,7 @@ exports.index = function(req,res){
 
     models.Quiz.findAll(
         {where: ["pregunta like ?", csearch],
-        order : 'tema COLLATE NOCASE ASC, pregunta COLLATE NOCASE ASC'}).then(function(quizes){
+        order : 'tema ASC, pregunta ASC'}).then(function(quizes){
         res.render('quizes/index.ejs',{quizes: quizes, search: search, errors:[]});
     }).catch(function(error){ next(error);});
 };
