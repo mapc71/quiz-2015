@@ -1,6 +1,6 @@
 var models = require('../models/models.js');
 
-var temas = ["Otro", "Humanidades", "Ocio", "Ciencia", "Tecnología" ];
+var temas = ["Otro", "Humanidades", "Ocio", "Ciencia", "Tecnología",""].sort();
 
 
 exports.load = function (req, res, next, quizId) {
@@ -27,7 +27,7 @@ exports.index = function(req,res){
 
     models.Quiz.findAll(
         {where: ["pregunta like ?", csearch],
-        order : 'pregunta COLLATE NOCASE ASC'}).then(function(quizes){
+        order : 'tema COLLATE NOCASE ASC, pregunta COLLATE NOCASE ASC'}).then(function(quizes){
         res.render('quizes/index.ejs',{quizes: quizes, search: search, errors:[]});
     }).catch(function(error){ next(error);});
 };
