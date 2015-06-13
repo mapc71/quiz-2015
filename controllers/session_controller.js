@@ -12,8 +12,6 @@ exports.loginRequired= function(req,res,next){
 };
 
 
-
-
 //GET /login
 exports.new = function(req,res){
     var errors = req.session.errors || {};
@@ -37,7 +35,7 @@ exports.create = function(req,res){
         }
 
         //Crear session y guardar campos id , username
-        req.session.user = {id:user.id, username:user.username};
+        req.session.user = {id:user.id, username:user.username, lastAccessed:Date.now()};
         res.redirect(req.session.redir.toString());
     })
 };

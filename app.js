@@ -42,7 +42,21 @@ app.use(function (req, res, next) {
 
 })
 
+//controla expiración de la session (auto-logout)
+app.use(function(req,res,next){
 
+  //verificamos si hay session
+  if(req.session.user){
+
+    // el maximo tiempo sin acceder es de 2 minutos
+    if((Date.now() - req.session.user.lastAccessed) > 120000){
+      delete req.session.user;  //destruimos la session del usuario
+    }else{
+      req.session.user.lastAccessed = Date.now(); //actualizamos el ultimo acceso
+    }
+  }
+  next();
+});
 
 app.use('/', routes);
 
