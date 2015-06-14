@@ -3,6 +3,7 @@ var router = express.Router();
 var quizController = require('../controllers/quiz_controller');
 var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
+var stadisticController = require('../controllers/stadistic_controller');
 
 
 /* GET home page. */
@@ -33,6 +34,9 @@ router.delete('/quizes/:quizId(\\d+)', sessionController.loginRequired,  quizCon
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments', commentController.create);
 router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', sessionController.loginRequired,  commentController.publish);
+
+/* /stadistics */
+router.get('/stadistics', stadisticController.index);
 
 /* GET author page. */
 router.get('/author', function(req, res) {
