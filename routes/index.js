@@ -36,7 +36,7 @@ router.post('/quizes/:quizId(\\d+)/comments', commentController.create);
 router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', sessionController.loginRequired,  commentController.publish);
 
 /* /stadistics */
-router.get('/stadistics', stadisticController.index);
+router.get('/quizes/stadistics', stadisticController.index);
 
 /* GET author page. */
 router.get('/author', function(req, res) {
